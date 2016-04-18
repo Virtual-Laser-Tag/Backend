@@ -1,8 +1,7 @@
 class User:
     user_dictionary = {}
-    def __init__(self, name, password): # newly-created class instance
+    def __init__(self, name): # newly-created class instance
         self.name = name
-        self.__setpassword(password)
         self.scores = []
         self.score=0
         User.user_dictionary[self.name] = self;
@@ -10,9 +9,10 @@ class User:
         import datetime
         data = "^"+self.name+"^ "+str(datetime.datetime.now())+": "+str(score)
         self.scores.append(data)
-        f=open('G:\Zhenwei Wu\CS\User information.txt','a')
-        f.write(data+'\n')
+#        f=open('G:\Zhenwei Wu\CS\User information.txt','a')
+#        f.write(data+'\n')
         self.score=score
+        return score
     def print_all_record(self,number): #print the required number of scores
         result =self.name + "'s " + str(number) +" records:" + '\n'
         if(number > len(self.scores)):
@@ -21,7 +21,7 @@ class User:
         else:
             for x in xrange(number):
                 result += self.scores[len(self.scores)-1-x] + '\n'
-        print result
+        return result
     def start_again(self):
         self.score=0
     def setpassword(self,password):
@@ -30,11 +30,20 @@ class User:
     @staticmethod
     def winner(): #print the winner of 2 players game
         users = User.user_dictionary.values()
-        sorted(users, key=lambda user:user.score)
-        print users[0].name
+        users = sorted(users, key=lambda user:int(user.score))
+        return users[-1].name
 
    
-
+if __name__ == "__main__":
+    sally = User("sally")
+    joe = User("joe")
+    sally.score_list(100)
+    joe.score_list(500)
+    print User.winner()
+    sally.score_list(999)
+    print User.winner()
+    joe.score_list(10000)
+    print User.winner()
         
         
     
