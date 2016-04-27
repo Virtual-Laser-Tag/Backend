@@ -1,5 +1,5 @@
 from User import User
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_restful import Resource, Api
 
 app = Flask(__name__)
@@ -27,6 +27,12 @@ class Score(Resource):
 class Winner(Resource):
     def get(self):
         return {'winner_name': User.winner()}
+
+@app.route('/')
+def home():
+    user_list = User.user_dictionary.values()
+    winner = User.winner()
+    return render_template('index.html',users=user_list,winner=winner)
 
 
 api.add_resource(Users, '/user/<string:user_name>')
