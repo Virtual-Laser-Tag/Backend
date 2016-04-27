@@ -31,6 +31,8 @@ class User:
     def winner(): #print the winner of 2 players game
         users = User.user_dictionary.values()
         users = sorted(users, key=lambda user:int(user.score))
+        if(len(users) < 1):
+            return ""
         return users[-1].name
 
    
