@@ -20,6 +20,8 @@ class Score(Resource):
 
     def put(self,user_name):
         new_score = request.form['data']
+        if user_name not in User.user_dictionary.keys():
+            User(user_name)
         User.user_dictionary[user_name].score_list(new_score)
         return {"user_name": user_name,
                 "new_score": new_score}
@@ -30,7 +32,9 @@ class Winner(Resource):
 
 @app.route('/')
 def home():
-    user_list = User.user_dictionary.values()
+    user_list = sorted(User.user_dictionary.values(), 
+                       key=lambda user:int(user.score),
+                       reverse=True)
     winner = User.winner()
     return render_template('index.html',users=user_list,winner=winner)
 
