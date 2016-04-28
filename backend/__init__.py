@@ -25,6 +25,15 @@ class Score(Resource):
         User.user_dictionary[user_name].score_list(new_score)
         return {"user_name": user_name,
                 "new_score": new_score}
+                
+class UserScored(Resource):
+    def get(self, user_name):
+        if user_name not in User.user_dictionary.keys():
+            User(user_name)
+        User.user_dictionary[user_name].score +=10
+        return {"user_name": user_name,
+                "new_score": User.user_dictionary[user_name].score}
+        
 
 class Winner(Resource):
     def get(self):
