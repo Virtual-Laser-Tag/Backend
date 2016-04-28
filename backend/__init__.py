@@ -33,6 +33,14 @@ class UserScored(Resource):
         User.user_dictionary[user_name].score +=10
         return {"user_name": user_name,
                 "new_score": User.user_dictionary[user_name].score}
+
+class AllScores(Resource):
+    def get(self,user_name):
+        score_dic = {}
+        for x in User.user_dictionary.keys():
+            score_dic[x]=User.user_dictionary[user_name].score
+        return score_dic
+
         
 
 class Winner(Resource):
