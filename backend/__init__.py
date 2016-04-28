@@ -41,9 +41,9 @@ class Winner(Resource):
 
 @app.route('/')
 def home():
-    user_list = sorted(User.user_dictionary.values(), 
-                       key=lambda user:int(user.score),
-                       reverse=True)
+    user_list = User.user_dictionary.values()#sorted(User.user_dictionary.values(), 
+                       #key=lambda user:int(user.score),
+                      # reverse=True)
     winner = User.winner()
     return render_template('index.html',users=user_list,winner=winner)
 
