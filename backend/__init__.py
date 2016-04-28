@@ -34,13 +34,6 @@ class UserScored(Resource):
         return {"user_name": user_name,
                 "new_score": User.user_dictionary[user_name].score}
 
-class AllScores(Resource):
-    def get(self,user_name):
-        score_dic = {}
-        for x in User.user_dictionary.keys():
-            score_dic[x]=User.user_dictionary[user_name].score
-        return score_dic
-
 class Winner(Resource):
     def get(self):
         return {'winner_name': User.winner()}
@@ -57,7 +50,6 @@ def home():
 api.add_resource(Users, '/user/<string:user_name>')
 api.add_resource(UserScored, '/userscored/<string:user_name>')
 api.add_resource(Score, '/score/<string:user_name>')
-api.add_resource(AllScores, '/allscores/)
 api.add_resource(Winner, '/winner')
 
 
