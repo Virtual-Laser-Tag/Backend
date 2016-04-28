@@ -25,7 +25,7 @@ class Score(Resource):
         User.user_dictionary[user_name].score_list(new_score)
         return {"user_name": user_name,
                 "new_score": new_score}
-                
+
 class UserScored(Resource):
     def get(self, user_name):
         if user_name not in User.user_dictionary.keys():
@@ -33,15 +33,23 @@ class UserScored(Resource):
         User.user_dictionary[user_name].score +=10
         return {"user_name": user_name,
                 "new_score": User.user_dictionary[user_name].score}
-        
+
 
 class Winner(Resource):
     def get(self):
         return {'winner_name': User.winner()}
 
+class Results(Resource):
+    def get(self):
+        ret = {};
+        for u in User.get_users():
+            ret[u.name] = u.score;
+        return ret;
+
+
 @app.route('/')
 def home():
-    user_list = sorted(User.user_dictionary.values(), 
+    user_list = sorted(User.user_dictionary.values(),
                        key=lambda user:int(user.score),
                        reverse=True)
     winner = User.winner()
@@ -51,8 +59,8 @@ def home():
 api.add_resource(Users, '/user/<string:user_name>')
 api.add_resource(Score, '/score/<string:user_name>')
 api.add_resource(Winner, '/winner')
+api.add_resource(Results, '/results')
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-

@@ -35,7 +35,15 @@ class User:
             return ""
         return users[-1].name
 
-   
+    @staticmethod
+    def get_users():
+        users = User.user_dictionary.values()
+        users = sorted(users, key=lambda user:int(user.score))
+        if(len(users) < 1):
+            return ""
+        return users;
+
+
 if __name__ == "__main__":
     sally = User("sally")
     joe = User("joe")
@@ -46,6 +54,3 @@ if __name__ == "__main__":
     print User.winner()
     joe.score_list(10000)
     print User.winner()
-        
-        
-    
