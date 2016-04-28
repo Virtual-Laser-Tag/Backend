@@ -27,7 +27,7 @@ class Score(Resource):
                 "new_score": new_score}
                 
 class UserScored(Resource):
-    def get(self, user_name):
+    def post(self, user_name):
         if user_name not in User.user_dictionary.keys():
             User(user_name)
         User.user_dictionary[user_name].score +=10
@@ -49,6 +49,7 @@ def home():
 
 
 api.add_resource(Users, '/user/<string:user_name>')
+api.add_resource(UserScored, '/userscored/<string:user_name>')
 api.add_resource(Score, '/score/<string:user_name>')
 api.add_resource(Winner, '/winner')
 
