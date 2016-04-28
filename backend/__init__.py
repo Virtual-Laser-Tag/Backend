@@ -28,6 +28,11 @@ class Score(Resource):
                 
 class UserScored(Resource):
     def get(self, user_name):
+        if user_name not in User.user_dictionary.keys():
+            User(user_name)
+        User.user_dictionary[user_name].score +=10
+        return {"user_name": user_name,
+                "new_score": User.user_dictionary[user_name].score}
         
 
 class Winner(Resource):
