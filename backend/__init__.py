@@ -36,8 +36,8 @@ class UserScored(Resource):
 
 class AllScores(Resource):
     def get(self):
-        score_dic = {}
-        for x in User.user_dictionary.keys():
+        score_dic = dict()
+        for user_name in User.user_dictionary.keys():
             score_dic[x]=User.user_dictionary[user_name].score
         return score_dic
 
